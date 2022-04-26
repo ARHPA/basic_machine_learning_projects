@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 
-movie_df = pd.read_csv("movies.csv")
-rating_df = pd.read_csv("ratings_sample.csv")
+movie_df = pd.read_csv("/home/amirreza/Desktop/basic_machine_learning_projects/recommendation_systems/movies.csv")
+rating_df = pd.read_csv("/home/amirreza/Desktop/basic_machine_learning_projects/recommendation_systems/ratings.csv")
 
 movie_df["year"] = movie_df["title"].str.extract("(\(\d\d\d\d\))", expand=False)
 movie_df["year"] = movie_df["year"].str.extract("(\d\d\d\d)", expand=False)
@@ -11,9 +11,8 @@ movie_df = movie_df.dropna()
 #movie_df["year"] = movie_df["year"].astype(int)
 movie_df["title"] = movie_df["title"].str.replace("(\(\d\d\d\d\))", "")
 movie_df["title"] = movie_df["title"].apply(lambda x: x.strip())
-first_movie_df = movie_df.copy()
 movie_df["genres"] = movie_df["genres"].apply(lambda x: x.split("|"))
-
+first_movie_df = movie_df.copy()
 
 for index, row in movie_df.iterrows():
     for genres in row["genres"]:
@@ -39,7 +38,7 @@ userInput = [
 
 input_df = pd.DataFrame(userInput)
 
-print(input_df)
+#print(input_df)
 
 user_input_movie = first_movie_df[movie_df["title"].isin(input_df["title"].tolist())]
 input_movie = movie_df[movie_df["title"].isin(input_df["title"].tolist())]
@@ -57,4 +56,4 @@ recommendation_df = first_movie_df[~first_movie_df["movieId"].isin(user_input_mo
 #recommendation_df = recommendation_df[~recommendation_df["movieId"].isin(input_movie["movieId"])]
 
 print("\n\n20 best movies you should to see:")
-print(recommendation_df)
+print(recommendation_df[["movieId", "title", "year"]])

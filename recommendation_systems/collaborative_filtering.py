@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 
 movieDf = pd.read_csv("movies.csv")
-ratingDf = pd.read_csv("ratings_sample.csv")
+ratingDf = pd.read_csv("ratings.csv")
 
 movieDf["year"] = movieDf["title"].str.extract('(\(\d\d\d\d\))')
 movieDf["year"] = movieDf["year"].str.extract('(\d\d\d\d)')
